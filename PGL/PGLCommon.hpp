@@ -2,6 +2,7 @@
 #define SJTU_PGLCOMMON_HPP
 
 #include <cmath>
+#include <algorithm>
 
 namespace sjtu{
 
@@ -40,6 +41,12 @@ PGLPoint operator /(const PGLPoint &a, const double &t) {
 PGLPoint operator /(const double &t, const PGLPoint &a) {
 	return PGLPoint(a.x / t, a.y / t);
 }
+double dot(const PGLPoint &a, const PGLPoint &b) {
+	return a.x * b.x + a.y * b.y;
+}
+double det(const PGLPoint &a, const PGLPoint &b) {
+	return a.x * b.y - b.x * a.y;
+}
 /*****************************************************************/
 
 /*****************************************************************/
@@ -51,9 +58,10 @@ const double CMAP[][3] = {
 	{1.0, 1.0, 1.0},
 	{1.0, 0.0, 0.0},
 	{0.0, 1.0, 0.0},
-	{0.0, 0.0, 0.0},
+	{0.0, 0.0, 1.0},
 	{0.5, 0.5, 0.5},
-	{0.5, 0.0, 0.5},
+	{1.0, 0.0, 1.0},
+	{1.0, 1.0, 0.0},
 };
 struct PGLColor{
 	double value[3];
@@ -63,16 +71,17 @@ struct PGLColor{
 };
 
 PGLColor::PGLColor(const Color &rhs) {
+	value[0] = CMAP[rhs][0];
 	value[1] = CMAP[rhs][1];
 	value[2] = CMAP[rhs][2];
-	value[0] = CMAP[rhs][0];
 }
 
 PGLColor getColor(const double &rate) {
-	if (rate < 0.2) return BLUE;
-	else if (rate < 0.5) return GREEN;
-	else if (rate < 0.7) return YELLOW;
-	else return RED;
+	PGLColor ret;
+	ret.value[0] = std::min(1.0, rate);
+	ret.value[1] = std::max(0.0, 0.3 - rate);
+	ret.value[2] = std::max(0.0, 0.8 - rate * rate);
+	return ret;
 }
 /*****************************************************************/
 
