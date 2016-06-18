@@ -1,0 +1,17 @@
+\begin{thebibliography}{1}
+
+\bibitem{ref2}
+百度百科, \url{http://baike.baidu.com/view/9222.htm}.
+\newblock {\em OpenGL}.
+
+\bibitem{ref1}
+Dave Shreiner、Graham Sellers、John Kessenich、Bill Licea-Kane、王锐
+  等译.
+\newblock {\em OpenGL编程指南}, eighth edition.
+
+\bibitem{ref3}
+赵凯华、罗蔚茵.
+\newblock {\em 新概念物理教程 - 力学}, second edition.
+\newblock 第三章　机械能守恒.
+
+\end{thebibliography}
