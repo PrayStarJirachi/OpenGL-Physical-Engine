@@ -30,17 +30,15 @@ int init(sjtu::PGLAtom *atom) {
 	atom[4].r = RADIUS;
 	atom[4].m = 1.0;*/
 	double rate = 30000;
-	int n = 1001;
-	atom[0].p = sjtu::PGLPoint(rand() % (1000 - RADIUS) + RADIUS, rand() % (700 - RADIUS) + RADIUS);
-	atom[0].v = sjtu::PGLPoint(-0.0001, 0);
-	atom[0].r = RADIUS * 5;
-	atom[0].m = 100.0;
-	for (int i = 1; i < n; i++) {
-		atom[i].p = sjtu::PGLPoint(i / 50 * (3 * RADIUS) + 10 * RADIUS, i % 70 * (3 * RADIUS) + RADIUS);//rand() % (1000 - RADIUS) + RADIUS, rand() % (700 - RADIUS) + RADIUS);
-		atom[i].v = sjtu::PGLPoint(0, 0);//rand() % 10 / rate, rand() % 10 / rate);
-		atom[i].r = RADIUS;
-		atom[i].m = 1.0;
+	int n = 0;
+	for (int i = 10; i < 800; i += 20) {
+		atom[n].p = sjtu::PGLPoint(i, 300);
+		atom[n].v = sjtu::PGLVector(0, 0);
+		atom[n].r = RADIUS;
+		atom[n].m = 2;
+		n++;
 	}
+	atom[0].v = sjtu::PGLVector(0.001, 0);
 	
 	return n;
 }
