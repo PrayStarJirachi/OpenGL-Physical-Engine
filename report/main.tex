@@ -234,11 +234,11 @@
 	通过两个模型都可以看出一开始气体分子和容器壁碰撞较少，之后碰撞逐渐增多，最后趋于稳定（有少许波动）。相对应的系统的熵从一个较小值逐渐增大，最后趋于平衡。
 	\subsubsection{理想气体状态方程的验证}
 	\subsection{三体问题模拟实验}
-	\subsubsection*{实验原理}
+	\subsubsection{实验原理}
 	在三体问题中，我们采用和分子动力学方法差不多的模拟方法，即计算每颗星球在每个时刻的受力，并且假设这颗星球在一个极短的时间内所受的力不变，然后以此来计算下一个时刻的
 	各个物理参量。下面列出每个星球的运动方程：
 	\[\mathbf{a_i} = \frac{1}{m_i}\sum_{k \neq i} G\frac{m_im_k}{\lVert \mathbf{r_k} - \mathbf{r_i} \rVert^3}(\mathbf{r_k} - \mathbf{r_i})\]
-	\subsubsection*{实验结果及分析}
+	\subsubsection{实验结果及分析}
 	下面是在灰尘的坐标差异仅有0.1的情况下所得到的灰尘的运动轨迹（其中红色和蓝色的球表示两个质量极大的星球，黑色的点表示一粒灰尘，黑色的线表示灰尘的轨迹，红色的线
 	表示位置矢量）：
 	\begin{figure}[H]
@@ -265,8 +265,59 @@
 	\end{figure}
 	不难发现，仅仅只是微小的位置差异，也能够让灰尘的运动轨迹大不相同，这说明三体问题中混沌现象确实是存在的。
 	\subsection{机械波模拟实验}
-	\subsubsection*{实验原理}
-	\subsubsection*{实验结果及分析}
+	\subsubsection{实验原理}
+	\subsubsection*{机械波模型的建立}
+	在机械波问题中，我们采用类似于分子热运动学的模拟方法，在一维的线性弹簧振子链模型的基础上展开研究。在理想模型的设置上，我们参考了固体物理中一维晶格振动
+	的理想模型，将传递介质看成是一维空间上无限多个质点的集合，并且假设质点在$x$轴上的位移始终为0。类似于一维晶格振动的纵波模型，我们假设：$u_n$为序号为$n$的
+	质点在$t$时刻离开平衡位置的位移；设$r$为质点振动时序号为$n$和$n+1$的两原子间在$t$时刻的距离，$\delta$为两质点在$x$轴上的间距，那么：
+	\[r=\sqrt{(u_{n+1} - u_n)^2+\delta^2}\]
+	设$U(r)$为两原子之间的相互作用势，若假设原子的位置总在平衡位置附近，那么对$U(r)$作泰勒展开有：
+	\[U(r) = U(\delta)+\sum_{k = 1}^{\infty} \frac{1}{k!}\frac{\mathrm{d}^kU}{{\mathrm{d}r}^k}(r-\delta)^k\]
+	由此可得两原子之间的相互作用力为：
+	\[f(r) = -\sum_{k = 1}^{\infty}\frac{1}{(k-1)!}\frac{\mathrm{d}^kU}{{\mathrm{d}r}^k}(r-\delta)^k\]
+	令$\displaystyle k=\frac{\mathrm{d}^2U}{{\mathrm{d}r}^2}$，忽略掉其它的高阶无穷小量，我们得到第$n$个原子和第$n+1$个原子在$y$轴方向上的相互作用力大小为：
+	\[f_n=k(u_{n+1}-u_n)-k(u_n-u_{n-1})=k(u_{n+1}+u_{n-1}-2u_n)\]
+	由此可以得到第$n$个质点的运动方程：
+	\[m\frac{\mathrm{d}^2U}{{\mathrm{d}r}^2}=k(u_{n+1}+u_{n-1}-2u_n)\]
+	根据这个方程，我们就可以使用分子动力学方法进行模拟。
+	\subsubsection*{驻波}
+	两列振幅相同的相干波，在同一直线上沿相反方向传播时，互相叠加后将形成驻波。即驻波是一种特殊的干涉现象。我们依据机械波的基本模型，我们可以模拟驻波的实验过程。
+	我们假设绳的一端固定，另一端受迫以一定的频率和振幅简谐振动，则一端振动产生的波与另一端产生的反射波恰好是一组振幅相同的相干波。\par
+	假设正向的波动方程为：
+	\[y=A\cos\left(\omega t+\frac{2\pi}{\lambda}+\phi_0\right)\]
+	那么反射波的波动方程为：
+	\[y=-A\cos\left(-\omega t+\frac{2\pi}{\lambda}+\phi_0\right)\]
+	它们叠加后的波动方程为：
+	\[y=2A\cos\left(\frac{2\pi}{\lambda}x\right)\cos(\omega t+\phi_0)\]
+	因此我们得到的合成波应该有如下性质：
+	\begin{itemize}
+		\item 振幅为：
+		\[A'=2A\cos\left(\frac{2\pi}{\lambda}\right)\]
+		\item 波腹的位置为：
+		\[x_0=\frac{\lambda}{2}k\]
+		\item 波节的位置为：
+		\[x_1=\frac{\lambda}{2}(2k+1)\]
+	\end{itemize}
+	\subsubsection{实验结果及分析}
+	如下图为形成驻波之前的图像：
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=3cm]{1.jpg}
+		\caption{形成驻波之前的图像}
+	\end{figure}
+	下图为形成驻波之后的图像：
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=3cm]{2.jpg}
+		\caption{形成驻波之后的图像}
+	\end{figure}
+	值得注意的是，这里模拟的驻波并不稳定，我们猜想这是因为振源的频率设置差异的原因——即振源的频率设置不恰当，以及计算时的精度误差导致了该机械波不能够稳定
+	存在，下图为不稳定时的图像：
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=3cm]{3.jpg}
+		\caption{不稳定时的图像}
+	\end{figure}
 	\section{附录与感想}
 	\noindent 在这次研究过程中，我们有如下感想：
 	\begin{enumerate}
@@ -276,7 +327,10 @@
 		\item 通过这次的研究，我们也发现了OpenGL$^\text{TM}$的库的强大之处，在探究物理世界的同时也增进了编程水平；
 		\item 感谢老师在研究过程中给予我们的关心与指导！
 	\end{enumerate}
-	本文所附带的实验代码均放置在作者的\href{https://github.com/PrayStarJirachi/OpenGL-Physical-Engine}{GitHub}上。
+	本文所附带的实验代码均放置在作者的\href{https://github.com/PrayStarJirachi/OpenGL-Physical-Engine}{GitHub}上，其中通过其中的
+	\href{https://github.com/PrayStarJirachi/OpenGL-Physical-Engine/Execuable/Windows}{Windows版本的可执行文件}和
+	\href{https://github.com/PrayStarJirachi/OpenGL-Physical-Engine/Execuable/Linux}{Linux版本的可执行文件}可以得到上述的几个视频（当然初始化参数可能不同）。
+	
 	\bibliographystyle{plain}
 	\bibliography{ref}
 \end{document}

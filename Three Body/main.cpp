@@ -19,7 +19,7 @@ int init(sjtu::PGLAtom *atom) {
 	atom[1].m = 1000000;
 	atom[1].c = sjtu::BLUE;
 	
-	atom[2].p = sjtu::PGLPoint(350, 19.99);
+	atom[2].p = sjtu::PGLPoint(350, 20.01);
 	atom[2].v = sjtu::PGLPoint(0.001, 0);
 	atom[2].r = 2;
 	atom[2].m = 0.001;
